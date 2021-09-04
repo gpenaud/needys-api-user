@@ -1,0 +1,18 @@
+[Unit]
+Description=Handle users for Needys application
+After=network-online.target
+
+[Service]
+Type=simple
+
+User=${NEEDYS_API_USER_USER:-needys-api-user}
+Group=${NEEDYS_API_USER_GROUP:-needys-api-user}
+UMask=007
+
+ExecStart=${NEEDYS_API_USER_BINARY_PATH:-}/needys-api-user ${NEEDYS_API_USER_OPTIONS:-"--database.host 0.0.0.0"}
+
+Restart=on-failure
+TimeoutStopSec=300
+
+[Install]
+WantedBy=multi-user.target

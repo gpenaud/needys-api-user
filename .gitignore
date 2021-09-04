@@ -1,0 +1,5 @@
+# testing
+*.test
+*.tmp
+logs.txt
+needys-api-user

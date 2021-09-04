@@ -1,0 +1,37 @@
+# Config file for [Air](https://github.com/cosmtrek/air) in TOML format
+
+# Working directory
+# . or absolute path, please note that the directories following must be under root
+root = "."
+tmp_dir = "/tmp"
+
+[build]
+# Just plain old shell command. You could use `make` as well.
+cmd = "go build -ldflags \"-s -w -X main.Release=development -X main.Commit=000000 -X main.BuildTime=0001-01-01_00:00:01 \" -o ./needys-api-user ./cmd/needys-api-user-server/main.go"
+
+# Binary file yields from `cmd`.
+bin = "tmp/app"
+
+# Customize binary.
+# This is how you start to run your application. Since my application will works like CLI, so to run it, like to make a CLI call.
+full_bin = "./needys-api-user --server.host 0.0.0.0 --database.host mariadb --database.initialize --environment development --verbosity debug --log-healthcheck"
+
+# This log file places in your tmp_dir.
+log = "air_errors.log"
+
+# Watch these filename extensions.
+include_ext = ["go", "yaml", "sh"]
+
+# Ignore these filename extensions or directories.
+exclude_dir = ["tmp"]
+
+# It's not necessary to trigger build each time file changes if it's too frequent.
+delay = 1000 # ms
+
+[log]
+# Show log time
+time = true
+
+[misc]
+# Delete tmp directory on exit
+clean_on_exit = true

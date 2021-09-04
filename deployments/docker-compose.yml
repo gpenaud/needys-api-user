@@ -1,0 +1,34 @@
+version: "3.0"
+
+networks:
+  needys-api-user:
+
+services:
+  needys-api-user:
+    container_name: needys-api-user
+    image: needys-api-user:latest
+    ports:
+      - 8010:8010
+      - 8090:8090
+    volumes:
+      - ./../:/application
+    networks:
+      - needys-api-user
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/live"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  mariadb:
+    image: mariadb:10.5.1
+    hostname: db.needys.local
+    environment:
+      MYSQL_DATABASE: needys
+      MYSQL_ROOT_PASSWORD: needysroot
+      MYSQL_USER: needys
+      MYSQL_PASSWORD: needys
+    ports:
+      - 3306:3306
+    networks:
+      - needys-api-user
